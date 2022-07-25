@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title></title>
+</head>
+<body>
+<h1>Hi! {{ account.email }}</h1>
+<h1> Balance: {{ account.balance }}</h1>
+<p>{{ status }}</p>
+<button onclick="window.location.replace('/user_page/deposit')">deposit</button>
+<button onclick="window.location.replace('/user_page/withdraw')">withdraw</button>
+<button onclick="window.location.replace('/user_page/transfer')">transfer</button>
+
+<p></p>
+<button onclick="window.location.replace('/user_page/tx_history')">Transaction history</button>
+<button onclick="window.location.replace('/')">Sign out</button>
+
+</body>
+</html>

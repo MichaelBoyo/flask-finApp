@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<form method="POST" action="/transfer/">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <div class="container">
+        <h1>transfer Page</h1>
+
+        <label for="re-email"><b></b></label>
+        <input type="text" placeholder="receiver email" name="re-email" id="re-email">
+
+        <label for="amt"><b></b></label>
+        <input type="number" placeholder="enter amount" name="amt" id="amt">
+
+        <label for="pwd"><b></b></label>
+        <input type="text" placeholder="enter password" name="pwd" id="pwd">
+
+        <button type="submit" id="send-btn">Send</button>
+
+        <button id="back-btn">back</button>
+    </div>
+
+</form>
+
+</body>
+<script src= {{ url_for('static', filename='index.js') }}></script>
+</html>

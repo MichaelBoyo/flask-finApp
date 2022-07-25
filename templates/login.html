@@ -1,0 +1,30 @@
+<html lang="eng">
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title></title>
+    <style style="background: black"></style>
+</head>
+<form method="POST" action="/user_page">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <div class="container">
+        <h1>Login</h1>
+        <hr>
+        <label for="email"><b>Email</b></label>
+        <input type="text" placeholder="Enter Email" name="email" id="email" required>
+
+        <label for="psw"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
+        {% if error!= "" %}
+            <button>forgot password?</button>
+            {{ error }}
+        {% endif %}
+        <hr>
+        <button type="submit" id="register-btn">Login</button>
+    <div class="container signin">
+    <p>don't have an account? <a href="/register/">Sign Up</a>.</p>
+    </div>
+</form>
+<body>
+<script src= {{ url_for('static', filename='index.js') }}></script>
+</body>
+</html>

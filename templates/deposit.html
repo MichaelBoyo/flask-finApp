@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+</head>
+<body>
+<form method="POST" action="/deposit/">
+     <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+  <div class="container">
+    <h1>Deposit Page</h1>
+    <p>Enter amount to Deposit.</p>
+
+    <label for="amt"><b></b></label>
+    <input type="number" placeholder="enter amount" name="amt" id="amt" >
+
+
+    <button type="submit" id="send-btn">Send</button>
+
+      <button id ="back-btn">back</button>
+  </div>
+
+</form>
+
+</body>
+<script src = {{url_for('static', filename='index.js')}}></script>
+</html>

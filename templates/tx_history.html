@@ -1,0 +1,22 @@
+<html lang="eng">
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title></title>
+</head>
+<body>
+<form method="POST" action="/user_page/">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <div class="container">
+        <h1>Transaction History</h1>
+        {% for e in account.transaction_history %}
+            <p>{{ e }}</p>
+        {% endfor %}
+
+        <button id="back-btn">back</button>
+    </div>
+
+</form>
+
+</body>
+<script src= {{ url_for('static', filename='index.js') }}></script>
+</html>
