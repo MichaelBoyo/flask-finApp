@@ -16,7 +16,7 @@ class MyTestCase(unittest.TestCase):
     def test_encoded_password(self):
         self.account.password = "password"
         self.assertNotEqual("password", self.account.password)
-        self.assertTrue(self.account.validatePassword("password"))
+        self.assertTrue(self.account.validatePassword("password", self.account.password))
 
     def test_deposit(self):
         self.account.deposit(1000)

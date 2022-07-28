@@ -34,16 +34,16 @@ def logg():
 @app.route('/send_details', methods=['POST'])
 def registration():
     email = request.form['email']
-    passw = request.form['psw']
-    passw_rpt = request.form['psw-repeat']
+    pwd = request.form['psw']
+    pwd_rpt = request.form['psw-repeat']
 
-    if passw != passw_rpt:
+    if pwd != pwd_rpt:
         error = "password doesn't match"
         return render_template('register.html', error=error)
 
     acct = Account()
     acct.email = email
-    acct.password = passw
+    acct.password = pwd
 
     users.insert_one({"email": acct.email, "password": acct.password, "tx_history": acct.transaction_history})
     return render_template('login.html', Httpstatus="okay")
@@ -70,18 +70,18 @@ def transfer():
         acc = find_acct_by_email(re_email)
         acc.transaction_history.append(
             dict(amount=int(amount),
-                             date=datetime.now().strftime(f"%Y-%m-%d {'time->'} %H:%M"), type="Transfer-in")
+                 date=datetime.now().strftime(f"%Y-%m-%d {'time->'} %H:%M"), type="Transfer-in")
         )
         save(acc)
-        account.transaction_history.append( dict(amount=int(amount),
-                             date=datetime.now().strftime(f"%Y-%m-%d {'time->'} %H:%M"), type="Transfer-out"))
+        account.transaction_history.append(
+            dict(amount=int(amount), date=datetime.now().strftime(f"%Y-%m-%d {'time->'} %H:%M"), type="Transfer-out"))
 
         save(account)
         status = 'transfer successful'
     else:
         print("invalid pass")
 
-    return render_template('userpage.html', account=account, status=status)
+    return render_template('user_page.html', account=account, status=status)
 
 
 def find_acct_by_email(email: str) -> Account | None:
@@ -101,8 +101,8 @@ def deposit(acct: Account, amount):
     try:
         acct.deposit(int(amount))
 
-    except:
-        status = 'deposit failed'
+    except ValueError as e:
+        status = e.args[0]
         return status
 
     save(acct)
@@ -113,25 +113,27 @@ def deposit(acct: Account, amount):
 def deposit_and_return():
     amount = request.form['amt']
     status = deposit(account, amount)
-    return render_template('userpage.html', account=account, status=status)
+    return render_template('user_page.html', account=account, status=status)
 
 
 @app.route('/withdraw/', methods=['POST'])
 def withdraw_():
     amount = request.form['amt']
     status = withdraw(account, amount)
-    return render_template('userpage.html', account=account, status=status)
+    return render_template('user_page.html', account=account, status=status)
 
 
-def withdraw(account: Account, amount):
+def withdraw(acct: Account, amount):
     status = 'withdrawal successful'
     try:
-        account.withdraw(int(amount))
-        print(account.transaction_history)
+        acct.withdraw(int(amount))
+        print(acct.transaction_history)
 
-    except:
-        status = 'withdrawal failed'
-    save(account)
+    except ValueError as e:
+        status = e.args[0]
+        return status
+
+    save(acct)
     return status
 
 
@@ -151,23 +153,28 @@ def tx_history_req():
 
 
 @app.route('/user_page/deposit/')
-def deppo():
+def deposit_page():
     return render_template('deposit.html', account=account)
 
 
 @app.route('/user_page', methods=['POST'])
-def getAccount(val=1):
+def getAccount():
     email = request.form['email']
     pwd = request.form['psw']
     user_list = list(users.find())
     for user in user_list:
+        # if user['email'] == email:
+        #     global account
+        #     # account = Account(*vars(user))
+        #     print(user)
+        #     if account.validatePassword(pwd,user['password']):
+        #         return render_template('user_page.html', account=account)
         if user['email'] == email and account.validatePassword(pwd, user['password']):
             account.email = user['email']
             account.transaction_history = user['tx_history']
             account.password = user['password']
 
-
-            return render_template('userpage.html', account=account)
+            return render_template('user_page.html', account=account)
     error = "invalid credentials, try again"
 
     return render_template('login.html', error=error)

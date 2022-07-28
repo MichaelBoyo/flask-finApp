@@ -18,15 +18,16 @@ class Account:
         credit = sum([a["amount"] for a in self.transaction_history
                       if a["type"] == "Deposit" or a["type"] == "Transfer-in"])
 
-        debits = sum([a["amount"] for a in self.transaction_history if a["type"] == "Withdraw" or a["type"] == "Transfer-out"])
+        debits = sum([a["amount"] for a in self.transaction_history
+                      if a["type"] == "Withdraw" or a["type"] == "Transfer-out"])
         return credit-debits
 
     @property
     def password(self):
         return utils.hash_password(self._password)
 
-    def validatePassword(self, password, hashedpw=''):
-        return utils.validate_password(password, hashedpw)
+    def validatePassword(self, password, hashed_pwd=''):
+        return utils.validate_password(password, hashed_pwd)
 
     @password.setter
     def password(self, password):

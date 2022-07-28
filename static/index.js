@@ -15,5 +15,5 @@ loginBtn.addEventListener("click",()=>{
 //
 //
 // backBtn.addEventListener("click",()=>{
-//     window.location.replace('/user_page')
+//     window.location.replace('/user_page.html')
 // })
