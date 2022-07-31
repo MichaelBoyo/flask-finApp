@@ -59,7 +59,6 @@ def save(acct):
 
 @app.route("/transfer/", methods=['POST'])
 def transfer():
-    print(account.gbq())
     re_email = request.form['re-email']
     amount = request.form['amt']
     pwd = request.form['pwd']
@@ -163,12 +162,6 @@ def getAccount():
     pwd = request.form['psw']
     user_list = list(users.find())
     for user in user_list:
-        # if user['email'] == email:
-        #     global account
-        #     # account = Account(*vars(user))
-        #     print(user)
-        #     if account.validatePassword(pwd,user['password']):
-        #         return render_template('user_page.html', account=account)
         if user['email'] == email and account.validatePassword(pwd, user['password']):
             account.email = user['email']
             account.transaction_history = user['tx_history']
